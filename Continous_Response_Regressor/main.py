@@ -58,14 +58,14 @@ base_regressor = train_model(standard_model, train_loader, test_loader, loss_fn)
 p9 = ggplot(data=base_regressor.epoch_history) + geom_line(
     aes(x="epoch", y="value", color="variable")
 )
-#p9.save(PLOTS_PATH / "standard_regressor_epochs.png", width=6, height=4, dpi=300)
+p9.save(PLOTS_PATH / "standard_regressor_epochs.png", width=6, height=4, dpi=300)
 
 dropout_regressor = train_model(dropout_model, train_loader, test_loader, loss_fn)
 
 p9 = ggplot(data=dropout_regressor.epoch_history) + geom_line(
     aes(x="epoch", y="value", color="variable")
 )
-#p9.save(PLOTS_PATH / "dropout_regressor_epochs.png", width=6, height=4, dpi=300)
+p9.save(PLOTS_PATH / "dropout_regressor_epochs.png", width=6, height=4, dpi=300)
 
 
 all_epoch_history = pd.concat(
@@ -82,5 +82,5 @@ p9 = (
     + coord_cartesian(xlim=(1, None))
     + theme(legend_position="top", legend_text=element_text(size=5))
 )
-#p9.save(PLOTS_PATH / "all_epochs.png", width=6, height=4, dpi=300)
+p9.save(PLOTS_PATH / "all_epochs.png", width=6, height=4, dpi=300)
 
