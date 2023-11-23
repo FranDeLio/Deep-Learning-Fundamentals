@@ -1,7 +1,5 @@
-from config import N_EPOCHS, GAMMA, SCHEDULER_STEP, LEARNING_RATE, P_DROPOUT
-from data_oriented_classes import ModelOutput
-
 import copy
+from typing import Type
 
 from tqdm import tqdm
 import numpy as np
@@ -9,6 +7,11 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import pandas as pd
+from torch.utils.data import DataLoader
+
+
+from config import N_EPOCHS, GAMMA, SCHEDULER_STEP, LEARNING_RATE, P_DROPOUT
+from data_oriented_classes import ModelOutput
 
 
 # Define the model
@@ -54,9 +57,9 @@ class DeepNet(nn.Module):
         x = self.act3(self.layer3(x))
         x = self.output(x)
         return x
-    
 
-def evaluate(model, data_loader, loss_fn):
+
+def evaluate(model: nn.Module, data_loader: DataLoader, loss_fn: nn.Module) -> float:
     model.eval()
     batch_loss = []
 
@@ -66,12 +69,21 @@ def evaluate(model, data_loader, loss_fn):
             loss = loss_fn(y_pred, y_batch)
             batch_loss.append(loss.item())
 
-    mse = np.mean(batch_loss)
+    mse = float(np.mean(batch_loss))
     return mse
 
 
-def train_model(model, train_loader, test_loader, loss_fn, n_epochs=N_EPOCHS, weight_decay=0):
-    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=weight_decay)
+def train_model(
+    model: nn.Module,
+    train_loader: DataLoader,
+    test_loader: DataLoader,
+    loss_fn: nn.Module,
+    n_epochs: int = N_EPOCHS,
+    weight_decay: float = 0,
+) -> ModelOutput:
+    optimizer = optim.Adam(
+        model.parameters(), lr=LEARNING_RATE, weight_decay=weight_decay
+    )
     optimizer_scheduler = optim.lr_scheduler.StepLR(
         optimizer, step_size=SCHEDULER_STEP, gamma=GAMMA
     )
