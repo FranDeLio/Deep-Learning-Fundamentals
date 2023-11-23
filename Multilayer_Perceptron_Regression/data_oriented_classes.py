@@ -21,7 +21,7 @@ class DatasetClass(Dataset):
 class ModelOutput:
     """Class for keeping track of an item in inventory."""
 
-    model: Type[nn.Module]
+    model: nn.Module
     train_mse: float
     best_weights: float
     test_mse: float
