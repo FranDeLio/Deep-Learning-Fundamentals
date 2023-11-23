@@ -9,10 +9,8 @@ import torch.optim as optim
 import pandas as pd
 from torch.utils.data import DataLoader
 
-
 from config import N_EPOCHS, GAMMA, SCHEDULER_STEP, LEARNING_RATE, P_DROPOUT
 from data_oriented_classes import ModelOutput
-
 
 # Define the model
 class DeepNet_wDropout(nn.Module):
