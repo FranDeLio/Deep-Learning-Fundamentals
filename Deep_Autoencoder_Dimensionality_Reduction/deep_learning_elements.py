@@ -12,7 +12,6 @@ from torch.utils.data import DataLoader
 from config import N_EPOCHS, GAMMA, SCHEDULER_STEP, LEARNING_RATE, P_DROPOUT
 from data_oriented_classes import ModelOutput
 
-
 # Define the model
 class Autoencoder(nn.Module):
     def __init__(self):
@@ -43,25 +42,7 @@ class Autoencoder(nn.Module):
         if decode==False: return x.squeeze()
         x = self.decoder(x)
         return x.squeeze()
-    
-class DeepNetMNIST_wDropout(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.Matrix1 = nn.Linear(28**2,100)
-        self.Matrix2 = nn.Linear(100,50)
-        self.output = nn.Linear(50,10)
-        self.R = nn.LeakyReLU()
-        self.dropout = nn.Dropout(P_DROPOUT)
-
-    def forward(self, x):
-        x = x.view(-1,28**2)
-        x = self.R(self.Matrix1(x))
-        x = self.dropout(x)
-        x = self.R(self.Matrix2(x))
-        x = self.dropout(x)
-        x = self.output(x)
-        return x.squeeze()
-
+        
 
 def evaluate(model: nn.Module, data_loader: DataLoader, loss_fn: nn.Module) -> float:
     model.eval()
