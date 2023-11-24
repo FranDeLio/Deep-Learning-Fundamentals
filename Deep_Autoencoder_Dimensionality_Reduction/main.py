@@ -47,5 +47,5 @@ df['label'] = y_test.detach().numpy().astype(str)
 
 p9 = (ggplot(data=df)+
         geom_point(aes(x='latent_var_1', y='latent_var_2', color='label')))
-p9.save(PLOTS_PATH / f"latent_space_MNIST_it{n_epochs}.png", width=6, height=4, dpi=300)
+p9.save(PLOTS_PATH / f"latent_space_MNIST_it{N_EPOCHS}.png", width=6, height=4, dpi=300)
 print(p9)
